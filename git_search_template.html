@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Search Results for "{{ SEARCH_STRING }}"</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { padding-top: 20px; padding-bottom: 20px; }
+        .container { max-width: 1400px; }
+        .context-code {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f9fa;
+            padding: 5px 8px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 5px;
+            overflow-x: auto;
+        }
+        .table th { vertical-align: middle; }
+        .table td { vertical-align: middle; word-break: break-word; }
+        .commit-hash-cell { word-break: break-all; }
+        .commit-hash { font-family: monospace; font-size: 0.9em; }
+        .copy-btn {
+             margin-left: 8px;
+             padding: 2px 5px;
+             font-size: 0.8em;
+             cursor: pointer;
+             vertical-align: middle;
+        }
+        .branch-list span {
+            display: inline-block;
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 3px 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            border: 1px solid #ced4da;
+        }
+        .alert strong { word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Git Search Results</h1>
+        <div class="alert alert-info" role="alert">
+            Searched for string: <strong>{{ SEARCH_STRING }}</strong>
+        </div>
+
+        <h2 class="mt-5">Commits Introducing the String (Oldest First)</h2>
+        {{ TABLE_ROWS }}
+    </div>
+
+    <script>
+        function copyToClipboard(element, textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = element.innerText;
+                element.innerText = 'Copied!';
+                element.disabled = true;
+                setTimeout(() => {
+                    element.innerText = originalText;
+                    element.disabled = false;
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text. See console for details.');
+            });
+        }
+    </script>
+</body>
+</html>
